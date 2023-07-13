@@ -1,2 +1,3 @@
 # python-challenge
-Northwestern Data Science Bootcamp HW3
+
+* Please run main.py from the directory it's in (either PyBank or PyPoll)

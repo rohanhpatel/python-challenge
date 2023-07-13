@@ -3,18 +3,20 @@ import math
 import csv
 import os
 
-# COMMENT THIS FILE
-
+# create paths
 csvPath = os.path.join(".", "Resources", "election_data.csv")
 outputPath = os.path.join(".", "analysis", "output.txt")
 
 with open(csvPath, encoding="UTF-8") as csvFile:
     csvReader = csv.reader(csvFile)
     csvHeader = list()
+    # initialize dictionary
     votes = dict()
     firstLine = True
+    # go through csv
     for line in csvReader:
         if not firstLine:
+            # get candidate and add 1 to count for that specific candidate
             candidate = line[2]
             if candidate not in votes:
                 votes[candidate] = 1
@@ -23,16 +25,19 @@ with open(csvPath, encoding="UTF-8") as csvFile:
         else:
             firstLine = False
             csvHeader = line
-
+    # get total votes using the votes for all candidates
     totVotes = 0
     for key in votes:
         totVotes += votes[key]
     maxVotes = -1
     winner = ""
+    # get winner using the maximum of all the votes
     for key in votes:
         if votes[key] > maxVotes:
             winner = key
             maxVotes = votes[key]
+
+    # now we print out results
     print("Election Results")
     print("-------------------------")
     for key in votes:
@@ -42,6 +47,7 @@ with open(csvPath, encoding="UTF-8") as csvFile:
     print(f"Winner: {winner}")
     print("-------------------------")
 
+    # and we finally output results to "output.txt"
     with open(outputPath, "w") as outFile:
         outFile.write("Election Results\n")
         outFile.write("-------------------------\n")
@@ -51,6 +57,3 @@ with open(csvPath, encoding="UTF-8") as csvFile:
         outFile.write("-------------------------\n")
         outFile.write(f"Winner: {winner}\n")
         outFile.write("-------------------------")            
-    
-    
-
