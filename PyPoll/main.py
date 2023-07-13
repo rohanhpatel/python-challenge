@@ -3,6 +3,18 @@ import math
 import csv
 import os
 
+# this function generates and returns a string that is used for output
+def generateString(totVotes, votes, winner):
+    s = "Election Results\n"
+    s += "-------------------------\n"
+    for key in votes:
+        percentage = float(votes[key])/totVotes * 100
+        s += f"{key}: {percentage:.3f}% ({votes[key]})\n"
+    s += "-------------------------\n"
+    s += f"Winner: {winner}\n"
+    s += "-------------------------"
+    return s
+
 # create paths
 csvPath = os.path.join(".", "Resources", "election_data.csv")
 outputPath = os.path.join(".", "analysis", "output.txt")
@@ -38,22 +50,8 @@ with open(csvPath, encoding="UTF-8") as csvFile:
             maxVotes = votes[key]
 
     # now we print out results
-    print("Election Results")
-    print("-------------------------")
-    for key in votes:
-        percentage = float(votes[key])/totVotes * 100
-        print(f"{key}: {percentage:.3f}% ({votes[key]})")
-    print("-------------------------")
-    print(f"Winner: {winner}")
-    print("-------------------------")
+    print(generateString(totVotes, votes, winner))
 
     # and we finally output results to "output.txt"
     with open(outputPath, "w") as outFile:
-        outFile.write("Election Results\n")
-        outFile.write("-------------------------\n")
-        for key in votes:
-            percentage = float(votes[key])/totVotes * 100
-            outFile.write(f"{key}: {percentage:.3f}% ({votes[key]})\n")
-        outFile.write("-------------------------\n")
-        outFile.write(f"Winner: {winner}\n")
-        outFile.write("-------------------------")            
+        outFile.write(generateString(totVotes, votes, winner))         

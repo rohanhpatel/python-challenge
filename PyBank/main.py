@@ -3,6 +3,17 @@ import math
 import csv
 import os
 
+# this function generates and returns a string that is used for output
+def generateString(totMonths, netPL, averageChanges, biggestProfit, biggestLoss):
+    s = "Finanical Analysis\n"
+    s += "----------------------------\n"
+    s += f"Total Months: {totMonths}\n"
+    s += f"Total: ${netPL}\n"
+    s += f"Average Changes: ${averageChanges:.2f}\n"
+    s += f"Greatest Increase in Profits: {biggestProfit[0]} (${biggestProfit[1]})\n"
+    s += f"Greatest Decrease in Profits: {biggestLoss[0]} (${biggestLoss[1]})"
+    return s
+
 # create paths
 csvPath = os.path.join(".", "Resources", "budget_data.csv")
 outputPath = os.path.join(".", "analysis", "output.txt")
@@ -45,20 +56,8 @@ with open(csvPath, encoding="UTF-8") as csvFile:
     averageChanges = float(sum(changes))/len(changes)
 
     # now we output the results
-    print("Finanical Analysis")
-    print("----------------------------")
-    print(f"Total Months: {totMonths}")
-    print(f"Total: ${netPL}")
-    print(f"Average Changes: ${averageChanges:.2f}")
-    print(f"Greatest Increase in Profits: {biggestProfit[0]} (${biggestProfit[1]})")
-    print(f"Greatest Decrease in Profits: {biggestLoss[0]} (${biggestLoss[1]})")
+    print(generateString(totMonths, netPL, averageChanges, biggestProfit, biggestLoss))
     
     # and we also output the results to "output.txt"
     with open(outputPath, "w") as outFile:
-        outFile.write("Finanical Analysis\n")
-        outFile.write("----------------------------\n")
-        outFile.write(f"Total Months: {totMonths}\n")
-        outFile.write(f"Total: ${netPL}\n")
-        outFile.write(f"Average Changes: ${averageChanges:.2f}\n")
-        outFile.write(f"Greatest Increase in Profits: {biggestProfit[0]} (${biggestProfit[1]})\n")
-        outFile.write(f"Greatest Decrease in Profits: {biggestLoss[0]} (${biggestLoss[1]})")
+        outFile.write(generateString(totMonths, netPL, averageChanges, biggestProfit, biggestLoss))
